@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 include_once 'Admin_controller.php';
 
 /**
@@ -19,7 +19,7 @@ class Admin_dashboard_controller extends Admin_controller
         $this->load->model('Admin_operation_model');
     }
 
-    public function index ()
+    public function index()
     {
         $this->_data['member_accounts'] = $this->Admin_operation_model->getMemberAccountData();
         $this->_data['member_uploads'] = $this->Admin_operation_model->getMemberUploadData();
