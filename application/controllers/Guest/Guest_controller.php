@@ -31,7 +31,6 @@ class Guest_controller extends CI_Controller
         $this->_setting = $this->config->item('setting');
 
         $this->_run_middlewares();
-
     }
 
     protected function _middleware()
@@ -50,8 +49,7 @@ class Guest_controller extends CI_Controller
      */
     public function dl($key, $data)
     {
-        if (ENVIRONMENT == 'development')
-        {
+        if (ENVIRONMENT == 'development') {
             error_log($key . ' CONTROLLER : <pre>' . print_r($data, TRUE) . '</pre>');
         }
     }
@@ -64,23 +62,20 @@ class Guest_controller extends CI_Controller
      */
     public function dj($key, $data)
     {
-        if (ENVIRONMENT == 'development')
-        {
+        if (ENVIRONMENT == 'development') {
             error_log($key . ' CONTROLLER : ' . json_encode($data));
         }
     }
 
     public function get_session()
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             return $_SESSION;
         }
 
         $session = $this->config->item('session_test');
 
-        if (!$session)
-        {
+        if (!$session) {
             $session = [];
         }
 
@@ -89,15 +84,11 @@ class Guest_controller extends CI_Controller
 
     public function set_session($field, $value)
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             $_SESSION[$field] = $value;
-        }
-        else
-        {
+        } else {
             $session = $this->config->item('session_test');
-            if (!$session)
-            {
+            if (!$session) {
                 $session = [];
             }
             $session[$field] = $value;
@@ -107,12 +98,9 @@ class Guest_controller extends CI_Controller
 
     public function destroy_session()
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             unset($_SESSION);
-        }
-        else
-        {
+        } else {
             $this->config->set_item('session_test', []);
         }
     }
@@ -127,13 +115,12 @@ class Guest_controller extends CI_Controller
      */
     protected function _send_email_notification($slug, $payload, $email)
     {
-		$this->load->model('email_model');
-		$this->load->library('mail_service');
+        $this->load->model('email_model');
+        $this->load->library('mail_service');
         $this->mail_service->set_adapter('smtp');
         $email_template = $this->email_model->get_template($slug, $payload);
 
-        if ($email_template)
-        {
+        if ($email_template) {
             $from = $this->config->item('from_email');
             return $this->mail_service->send($from, $email, $email_template->subject, $email_template->html);
         }
@@ -149,15 +136,14 @@ class Guest_controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_sms_notification($slug, $payload, $to)
+    protected function _send_sms_notification($slug, $payload, $to)
     {
-		$this->load->model('sms_model');
-		$this->load->library('sms_service');
+        $this->load->model('sms_model');
+        $this->load->library('sms_service');
         $this->sms_service->set_adapter('sms');
         $sms_template = $this->sms_model->get_template($slug, $payload);
 
-        if ($sms_template)
-        {
+        if ($sms_template) {
             return $this->sms_service->send($to, $sms_template->content);
         }
 
@@ -172,14 +158,14 @@ class Guest_controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
+    protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
     {
         $this->load->library('push_notification_service');
         $this->push_notification_service->init();
         return $this->push_notification_service->send($device_type, $device_id, $title, $message, $image);
     }
 
-    protected function _run_middlewares ()
+    protected function _run_middlewares()
     {
 
         $middlewares = [
@@ -189,14 +175,11 @@ class Guest_controller extends CI_Controller
             'maintenance' => new Maintenance_middleware($this, $this->config)
         ];
 
-        foreach ($this->_middleware() as $middleware_key)
-        {
-            if (isset($middlewares[$middleware_key]))
-            {
+        foreach ($this->_middleware() as $middleware_key) {
+            if (isset($middlewares[$middleware_key])) {
                 $result = $middlewares[$middleware_key]->run();
 
-                if (!$result)
-                {
+                if (!$result) {
                     return FALSE;
                 }
             }

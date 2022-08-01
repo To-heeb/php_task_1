@@ -261,6 +261,7 @@ $route['admin/class/add'] = 'Admin/Admin_class_controller/add';
 $route['v1/api/schools'] = 'Guest/Api_controller/get_schools';
 $route['v1/api/courses'] = 'Guest/Api_controller/get_courses';
 $route['v1/api/contact'] = 'Guest/Home_controller/contact';
+$route['v1/api/years'] = 'Guest/Api_controller/get_years';
 $route['privacy_policy'] = 'Guest/Home_controller/privacy_policy';
 $route['preview/(:num)'] = 'Guest/Home_controller/preview/$1';
 $route['member/setting'] = 'Member/Member_inventory_controller/setting';

@@ -16,7 +16,7 @@ include_once __DIR__ . '/../middlewares/Subscription_middleware.php';
  *
  */
 
-//Sentry\init(['dsn' => 'https://2c9f2b0e8d3e424a81d19c501c479d02@o1003846.ingest.sentry.io/5970395']);
+Sentry\init(['dsn' => 'https://2c9f2b0e8d3e424a81d19c501c479d02@o1003846.ingest.sentry.io/5970395']);
 
 
 
