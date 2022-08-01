@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
 include_once __DIR__ . '/../middlewares/Auth_middleware.php';
 include_once __DIR__ . '/../middlewares/Acl_middleware.php';
@@ -16,7 +16,7 @@ include_once __DIR__ . '/../middlewares/Subscription_middleware.php';
  *
  */
 
-Sentry\init(['dsn' => 'https://2c9f2b0e8d3e424a81d19c501c479d02@o1003846.ingest.sentry.io/5970395' ]);
+//Sentry\init(['dsn' => 'https://2c9f2b0e8d3e424a81d19c501c479d02@o1003846.ingest.sentry.io/5970395']);
 
 
 
@@ -62,26 +62,22 @@ class Manaknight_Controller extends CI_Controller
         // Language & Model Files
         //--------------------------------------------------------------------
 
-        if (!is_null($this->_language_file))
-        {
+        if (!is_null($this->_language_file)) {
             $this->lang->load($this->_language_file);
         }
 
-        if (!is_null($this->_model_file))
-        {
+        if (!is_null($this->_model_file)) {
             $this->load->model($this->_model_file);
         }
 
         //Flashdata setup
-        if ($this->session->flashdata('error'))
-        {
+        if ($this->session->flashdata('error')) {
             $this->_flash_error['error'] = $this->session->flashdata('error');
             $this->session->set_flashdata('error', '');
             $this->_data['error'] = $this->_flash_error['error'];
         }
 
-        if ($this->session->flashdata('success'))
-        {
+        if ($this->session->flashdata('success')) {
             $this->_flash_error['success'] = $this->session->flashdata('success');
             $this->session->set_flashdata('success', '');
             $this->_data['success'] = $this->_flash_error['success'];
@@ -98,7 +94,7 @@ class Manaknight_Controller extends CI_Controller
      *
      * @return void
      */
-    public function set_test_mode ()
+    public function set_test_mode()
     {
         $this->_test_mode = TRUE;
     }
@@ -162,8 +158,8 @@ class Manaknight_Controller extends CI_Controller
      * @param string $message
      */
     public function success($message)
-	{
-      $this->session->set_flashdata('success', $message);
+    {
+        $this->session->set_flashdata('success', $message);
     }
 
     /**
@@ -172,8 +168,8 @@ class Manaknight_Controller extends CI_Controller
      * @param string $message
      */
     public function error($message)
-	{
-      $this->session->set_flashdata('error', $message);
+    {
+        $this->session->set_flashdata('error', $message);
     }
 
     /**
@@ -184,8 +180,7 @@ class Manaknight_Controller extends CI_Controller
      */
     public function dl($key, $data)
     {
-        if (ENVIRONMENT == 'development')
-        {
+        if (ENVIRONMENT == 'development') {
             error_log($key . ' CONTROLLER : <pre>' . print_r($data, TRUE) . '</pre>');
         }
     }
@@ -198,23 +193,20 @@ class Manaknight_Controller extends CI_Controller
      */
     public function dj($key, $data)
     {
-        if (ENVIRONMENT == 'development')
-        {
+        if (ENVIRONMENT == 'development') {
             error_log($key . ' CONTROLLER : ' . json_encode($data));
         }
     }
 
     public function get_session()
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             return $_SESSION;
         }
 
         $session = $this->config->item('session_test');
 
-        if (!$session)
-        {
+        if (!$session) {
             $session = [];
         }
 
@@ -223,15 +215,11 @@ class Manaknight_Controller extends CI_Controller
 
     public function set_session($field, $value)
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             $_SESSION[$field] = $value;
-        }
-        else
-        {
+        } else {
             $session = $this->config->item('session_test');
-            if (!$session)
-            {
+            if (!$session) {
                 $session = [];
             }
             $session[$field] = $value;
@@ -241,13 +229,10 @@ class Manaknight_Controller extends CI_Controller
 
     public function destroy_session()
     {
-        if (!$this->_test_mode)
-        {
+        if (!$this->_test_mode) {
             unset($_SESSION);
             session_unset();
-        }
-        else
-        {
+        } else {
             $this->config->set_item('session_test', []);
         }
     }
@@ -262,13 +247,12 @@ class Manaknight_Controller extends CI_Controller
      */
     protected function _send_email_notification($slug, $payload, $email)
     {
-		$this->load->model('email_model');
-		$this->load->library('mail_service');
+        $this->load->model('email_model');
+        $this->load->library('mail_service');
         $this->mail_service->set_adapter('smtp');
         $email_template = $this->email_model->get_template($slug, $payload);
 
-        if ($email_template)
-        {
+        if ($email_template) {
             $from = $this->config->item('from_email');
             return $this->mail_service->send($from, $email, $email_template->subject, $email_template->html);
         }
@@ -284,15 +268,14 @@ class Manaknight_Controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_sms_notification($slug, $payload, $to)
+    protected function _send_sms_notification($slug, $payload, $to)
     {
-		$this->load->model('sms_model');
-		$this->load->library('sms_service');
+        $this->load->model('sms_model');
+        $this->load->library('sms_service');
         $this->sms_service->set_adapter('sms');
         $sms_template = $this->sms_model->get_template($slug, $payload);
 
-        if ($sms_template)
-        {
+        if ($sms_template) {
             return $this->sms_service->send($to, $sms_template->content);
         }
 
@@ -307,7 +290,7 @@ class Manaknight_Controller extends CI_Controller
      * @param string $to
      * @return void
      */
-	protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
+    protected function _send_push_notification($device_type, $device_id, $title, $message, $image)
     {
         $this->load->library('push_notification_service');
         $this->push_notification_service->init();
@@ -319,7 +302,7 @@ class Manaknight_Controller extends CI_Controller
         return [];
     }
 
-    protected function _run_middlewares ()
+    protected function _run_middlewares()
     {
 
         $middlewares = [
@@ -330,14 +313,11 @@ class Manaknight_Controller extends CI_Controller
             'subscription' => new Subscription_middleware($this, $this->config)
         ];
 
-        foreach ($this->_middleware() as $middleware_key)
-        {
-            if (isset($middlewares[$middleware_key]))
-            {
+        foreach ($this->_middleware() as $middleware_key) {
+            if (isset($middlewares[$middleware_key])) {
                 $result = $middlewares[$middleware_key]->run();
 
-                if (!$result)
-                {
+                if (!$result) {
                     return FALSE;
                 }
             }
@@ -354,8 +334,7 @@ class Manaknight_Controller extends CI_Controller
     public function image_upload_using_s3($file_name)
     {
 
-        if( $this->config->item('image_upload')  == 's3')
-        {
+        if ($this->config->item('image_upload')  == 's3') {
             $s3 = new S3Client([
                 'version' => $this->config->item('aws_version'),
                 'region'  => $this->config->item('aws_region'),
@@ -376,14 +355,13 @@ class Manaknight_Controller extends CI_Controller
             // file_put_contents($image_path . $filename, $data);
 
 
-            list($width, $height) = getimagesize( $image_path );
+            list($width, $height) = getimagesize($image_path);
             $session = $this->get_session();
             $user_id = isset($session['user_id']) ? $session['user_id'] : 0;
 
-            $file_name = str_replace('/uploads/','',$file_name);
+            $file_name = str_replace('/uploads/', '', $file_name);
 
-            try
-            {
+            try {
                 $result = $s3->putObject([
                     'Bucket' => $this->config->item('aws_bucket'),
                     'Key'    => $file_name,
@@ -401,21 +379,19 @@ class Manaknight_Controller extends CI_Controller
                 ]);
 
                 return $this->output->set_content_type('application/json')
-                ->set_status_header(200)
-                ->set_output(json_encode([
-                    'id'     => $image_id,
-                    'image'  => $result->get('ObjectURL'),
-                    'width'  => $width,
-                    'height' => $height
-                ]));
-            }
-            catch (Aws\S3\Exception\S3Exception $e)
-            {
+                    ->set_status_header(200)
+                    ->set_output(json_encode([
+                        'id'     => $image_id,
+                        'image'  => $result->get('ObjectURL'),
+                        'width'  => $width,
+                        'height' => $height
+                    ]));
+            } catch (Aws\S3\Exception\S3Exception $e) {
                 return $this->output->set_content_type('application/json')
-                ->set_status_header(403)
-                ->set_output(json_encode([
-                    'message' => 'Upload To S3 Failed'
-                ]));
+                    ->set_status_header(403)
+                    ->set_output(json_encode([
+                        'message' => 'Upload To S3 Failed'
+                    ]));
             }
         }
     }
@@ -427,15 +403,13 @@ class Manaknight_Controller extends CI_Controller
     {
         $output = $this->image_upload_using_s3($file_name);
         $out_image = '';
-        if( isset($output->final_output ) )
-        {
-            $result = json_decode( $output->final_output );
-            if(isset($result->image))
-            {
+        if (isset($output->final_output)) {
+            $result = json_decode($output->final_output);
+            if (isset($result->image)) {
                 $out_image = $result->image;
             }
             return $out_image;
-        } else{
+        } else {
             return $out_image;
         }
     }
