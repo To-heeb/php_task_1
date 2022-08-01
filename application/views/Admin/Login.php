@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,47 +17,54 @@
             height: auto;
             margin: 50px auto;
         }
+
         @media (max-width: 500px) {
             h1 {
                 font-size: 24px;
             }
+
             .form-container {
                 margin: 10px auto;
             }
         }
-        #logo{
-        width: 180px;
+
+        #logo {
+            width: 180px;
         }
-        .navbar{
-            padding:3px 10px !important;
+
+        .navbar {
+            padding: 3px 10px !important;
         }
-        #Navbar2{
+
+        #Navbar2 {
             text-align: center;
         }
-       .nav-link{
-           color:blue;
-       }
-       .nav-link.active{
-           text-decoration: underline;
-       }
+
+        .nav-link {
+            color: blue;
+        }
+
+        .nav-link.active {
+            text-decoration: underline;
+        }
     </style>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-sm bg-light navbar-danger" style="margin-bottom: 1px">
+    <nav class="navbar navbar-expand-sm bg-light navbar-danger" style="margin-bottom: 1px">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
-            <span class="navbar-toggler-icon"><img
-                    src="https://img.icons8.com/material-outlined/24/000000/menu--v1.png" /></span>
+            <span class="navbar-toggler-icon"><img src="https://img.icons8.com/material-outlined/24/000000/menu--v1.png" /></span>
         </button>
         <!-- Brand/logo -->
-        <a href="<?php echo base_url();?>"><img class="navbar-brand" id="logo" src="<?php echo base_url();?>/assets/frontend/img/Logo Files/Logo Files/SVG/Artboard 1 copy.svg" /></a>
+        <a href="<?php echo base_url(); ?>"><img class="navbar-brand" id="logo" src="<?php echo base_url(); ?>/assets/frontend/img/Logo Files/Logo Files/SVG/Artboard 1 copy.svg" /></a>
 
         <!-- Links -->
         <div class="collapse navbar-collapse" id="Navbar">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <!-- <a class="nav-link text-dark" href="<?php echo base_url();?>/member/register">Register</a> -->
+                    <!-- <a class="nav-link text-dark" href="<?php echo base_url(); ?>/member/register">Register</a> -->
                 </li>
-                
+
             </ul>
         </div>
     </nav>
@@ -65,57 +73,57 @@
             <h1>Login</h1>
         </div>
         <div class="form-container p-5">
-                <?php echo form_open();?>
-                <?php if (strlen($error) > 0) : ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger" role="alert">
-                                <?php echo $error; ?>
-                            </div>
+            <?php echo form_open(); ?>
+            <?php if (strlen($error) > 0) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $error; ?>
                         </div>
                     </div>
-                <?php endif; ?>
-                <?php if (validation_errors()) : ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger" role="alert">
-                                <?= validation_errors() ?>
-                            </div>
+                </div>
+            <?php endif; ?>
+            <?php if (validation_errors()) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger" role="alert">
+                            <?= validation_errors() ?>
                         </div>
                     </div>
-                <?php endif; ?>
-                <?php if (strlen($success) > 0) : ?>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-success" role="alert">
-                                <?php echo $success; ?>
-                            </div>
+                </div>
+            <?php endif; ?>
+            <?php if (strlen($success) > 0) : ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-success" role="alert">
+                            <?php echo $success; ?>
                         </div>
                     </div>
-                <?php endif; ?>
-                <div class="form-group">
-                    <label class='required' for="Email">Email</label>
-                    <input type="email" class="form-control site-input" id="email" name="email" required="true" />
                 </div>
-                <div class="form-group text-container">
-                    <label class='required' for="Password">Password </label>
-                    <input type="password" class="form-control site-input" id="password" name="password" required="true" >
-                </div>
-                
-                <div class="form-group">
-                    <input type="submit" name='btn-login' class="btn btn-primary btn-block" value="Login">
-                </div>
-            </form>
-    </div>
-</div>
-<div class="row justify-content-center mt-0">
-                <div class="col-auto mt-3">
-                    <p>© Copyright 2021 Outline Gurus</p>
-                </div>
+            <?php endif; ?>
+            <div class="form-group">
+                <label class='required' for="Email">Email</label>
+                <input type="email" class="form-control site-input" id="email" name="email" required="true" />
             </div>
+            <div class="form-group text-container">
+                <label class='required' for="Password">Password </label>
+                <input type="password" class="form-control site-input" id="password" name="password" required="true">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" name='btn-login' class="btn btn-primary btn-block" value="Login">
+            </div>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-0">
+        <div class="col-auto mt-3">
+            <p>© Copyright 2021 Outline Gurus</p>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
-</html>
 
+</html>

@@ -125,9 +125,10 @@ $school_id      = (isset($_GET['school_id']) ? $_GET['school_id'] : '');
 $class_id       = (isset($_GET['class_id']) ? $_GET['class_id'] : '');
 $professor_id   = (isset($_GET['professor_id']) ? $_GET['professor_id'] : '');
 $isbn           = (isset($_GET['isbn']) ? $_GET['isbn'] : '');
+$year           = (isset($_GET['year']) ? $_GET['year'] : '');
 
 
-$filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id=" . $professor_id . "&isbn=" . $isbn . "&";
+$filters = "school_id=" . $school_id . "&class_id=" . $class_id . "&professor_id=" . $professor_id . "&isbn=" . $isbn . "&year=" . $year . "&";
 
 ?>
 <div class="container-fluid jumbotron" style="min-height:99px;padding: 2rem 1rem;">

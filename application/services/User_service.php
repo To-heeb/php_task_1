@@ -70,15 +70,12 @@ class User_service
   {
     $user_id = $this->_factory->create($this->_model, $email, $password, $role, 'n');
 
-    if ($user_id)
-    {
+    if ($user_id) {
       $refer_code = (isset($refer) && strlen($refer) > 0) ? $refer : '';
-      if ($this->_refer_log_model && $refer_code != '')
-      {
+      if ($this->_refer_log_model && $refer_code != '') {
         $referrer_exist = $this->_model->get_by_field('refer', $refer_code);
 
-        if ($referrer_exist)
-        {
+        if ($referrer_exist) {
           $this->_refer_log_model->create([
             'user_id'          => $user_id,
             'referrer_user_id' => $referrer_exist->id,
@@ -107,15 +104,12 @@ class User_service
   {
     $user_id = $this->_factory->create($this->_model, $email, ' ', $role, $type);
 
-    if ($user_id)
-    {
+    if ($user_id) {
       $refer_code = (isset($refer) && strlen($refer) > 0) ? $refer : '';
-      if ($this->_refer_log_model && $refer_code != '')
-      {
+      if ($this->_refer_log_model && $refer_code != '') {
         $referrer_exist = $this->_model->get_by_field('refer', $refer_code);
 
-        if ($referrer_exist)
-        {
+        if ($referrer_exist) {
           $this->_refer_log_model->create([
             'user_id'          => $user_id,
             'referrer_user_id' => $referrer_exist->id,
@@ -146,16 +140,13 @@ class User_service
   {
     $user_id = $this->_factory->create_full_user($this->_model, $email, $password, $first_name, $last_name, $username, $role, 'n');
 
-    if ($user_id)
-    {
+    if ($user_id) {
       $refer_code = (isset($refer) && strlen($refer) > 0) ? $refer : '';
 
-      if ($this->_refer_log_model && $refer_code != '')
-      {
+      if ($this->_refer_log_model && $refer_code != '') {
         $referrer_exist = $this->_model->get_by_field('refer', $refer_code);
 
-        if ($referrer_exist)
-        {
+        if ($referrer_exist) {
           $this->_refer_log_model->create([
             'user_id'          => $user_id,
             'referrer_user_id' => $referrer_exist->id,
@@ -186,8 +177,7 @@ class User_service
       'status' => $this->_model->get_mapping()::ACTIVE
     ]);
 
-    if ($user)
-    {
+    if ($user) {
       return password_verify($password, $user->password) ? $user : FALSE;
     }
 
@@ -211,8 +201,7 @@ class User_service
       'status'  => $this->_model->get_mapping()::ACTIVE
     ]);
 
-    if ($user)
-    {
+    if ($user) {
       return password_verify($password, $user->password) ? $user : FALSE;
     }
 
@@ -240,16 +229,13 @@ class User_service
    */
   public function edit_user($data, $id)
   {
-    foreach ($data as $key => $value)
-    {
-      if (is_string($value) && $data[$key] == '')
-      {
+    foreach ($data as $key => $value) {
+      if (is_string($value) && $data[$key] == '') {
         unset($data[$key]);
       }
     }
 
-    if (isset($data['password']) && strlen($data['password']) > 0)
-    {
+    if (isset($data['password']) && strlen($data['password']) > 0) {
       $data['password'] = str_replace('$2y$', '$2b$', password_hash($data['password'], PASSWORD_BCRYPT));
     }
 
@@ -266,8 +252,7 @@ class User_service
   {
     $token = rand(1000000, 9999999) . rand(1000000, 9999999) . rand(1000000, 9999999);
 
-    if ($limit_chars)
-    {
+    if ($limit_chars) {
       $token = substr($token, 0, 7);
     }
 
@@ -300,28 +285,26 @@ class User_service
       'type'  => 'n'
     ]);
 
-    if ($user && $user->status == $this->_model->get_mapping()::ACTIVE)
-    {
-        $token = $this->reset_password_token($user->id, TRUE);
-        $to    = $email;
+    if ($user && $user->status == $this->_model->get_mapping()::ACTIVE) {
+      $token = $this->reset_password_token($user->id, TRUE);
+      $to    = $email;
 
-        if (!$this->_email_model)
-        {
-            throw new Exception('Missing Email Model');
-        }
+      if (!$this->_email_model) {
+        throw new Exception('Missing Email Model');
+      }
 
-        $template = $this->_email_model->get_template('reset-password', [
-            'email'       => $email,
-            'reset_token' => $token,
-            'link'        => $link
-        ]);
- 
-        $html = $template->html; 
-        $html .= "<br> Thanks,";
-        $html .= "<br><br> The OutlineGurus Team";
-        $html .= "<br> <img  src='" . base_url('assets/frontend/img/logo.png'). "' style='width:149px' />";
-         
-        return $this->_email_service->send($from_email, $to, $template->subject, $html);
+      $template = $this->_email_model->get_template('reset-password', [
+        'email'       => $email,
+        'reset_token' => $token,
+        'link'        => $link
+      ]);
+
+      $html = $template->html;
+      $html .= "<br> Thanks,";
+      $html .= "<br><br> The OutlineGurus Team";
+      $html .= "<br> <img  src='" . base_url('assets/frontend/img/logo.png') . "' style='width:149px' />";
+
+      return $this->_email_service->send($from_email, $to, $template->subject, $html);
     }
 
     return FALSE;
@@ -334,13 +317,11 @@ class User_service
       'type'  => 'n'
     ]);
 
-    if ($user && $user->status == $this->_model->get_mapping()::ACTIVE)
-    {
+    if ($user && $user->status == $this->_model->get_mapping()::ACTIVE) {
       $token = $this->reset_password_token($user->user_id, TRUE);
       $to    = $email;
 
-      if (!$this->_email_model)
-      {
+      if (!$this->_email_model) {
         throw new Exception('Missing Email Model');
       }
 
@@ -367,8 +348,7 @@ class User_service
       'status' => 1
     ]);
 
-    if ($token_found)
-    {
+    if ($token_found) {
       return $this->_model->get($token_found->user_id);
     }
 
@@ -389,8 +369,7 @@ class User_service
       'user_id' => $user_id
     ]);
 
-    if ($token_found)
-    {
+    if ($token_found) {
       return $this->_token_model->edit([
         'status' => 0
       ], $token_found->id);
@@ -410,8 +389,7 @@ class User_service
   {
     $user = $this->_model->get($user_id);
 
-    if ($user->status == $this->_model->get_mapping()::ACTIVE)
-    {
+    if ($user->status == $this->_model->get_mapping()::ACTIVE) {
       return $this->_model->edit([
         'password' => str_replace('$2y$', '$2b$', password_hash($password, PASSWORD_BCRYPT))
       ], $user_id);

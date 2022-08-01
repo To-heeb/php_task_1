@@ -165,7 +165,7 @@ class Inventory_model extends Manaknight_Model
   }
 
   // frontend functions
-  public function get_all_active_items_list_fe($search_term = '', $school_id = '', $professor_id = '', $textbook_id = '', $class_id = '', $isbn = '', $order_by = '', $direction = '', $offset = '', $limit = '')
+  public function get_all_active_items_list_fe($search_term = '', $school_id = '', $professor_id = '', $textbook_id = '', $class_id = '', $isbn = '', $year = '', $order_by = '', $direction = '', $offset = '', $limit = '')
   {
     $this->db->from('inventory');
     $this->db->join('school', 'inventory.school_id = school.id', 'LEFT');
@@ -174,6 +174,7 @@ class Inventory_model extends Manaknight_Model
     $this->db->join('classes', 'inventory.class_id = classes.id', 'LEFT');
     $this->db->join('user', 'inventory.user_id = user.id', 'LEFT');
     $this->db->join('review', 'inventory.id = review.inventory_id', 'LEFT');
+
 
     $this->db->select('inventory.*,sum(review.rating) as rating,count(review.id) as rating_count,user.first_name ,school.name AS school_name,classes.name AS class_name,textbook.name AS textbook_name,textbook.isbn AS textbook_isbn,professor.name AS professor_name');
     $this->db->where('inventory.status', 1);
@@ -218,6 +219,10 @@ class Inventory_model extends Manaknight_Model
 
     if ($class_id) {
       $query = $this->db->where('inventory.class_id', $class_id);
+    }
+
+    if ($year) {
+      $query = $this->db->where('inventory.year', $year);
     }
 
     if ($limit) {
