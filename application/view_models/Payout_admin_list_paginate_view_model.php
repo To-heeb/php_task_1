@@ -18,7 +18,7 @@ class Payout_admin_list_paginate_view_model
     protected $_per_page = 10;
     protected $_page;
     protected $_num_links = 5;
-    protected $_column = ['<input type="checkbox" class="id_checkbox_all">', 'Id', 'Order Id', 'User', 'Paypal Email', 'Amount', 'Status', 'Action'];
+    protected $_column = ['Id', 'Order Id', 'User', 'Paypal Email', 'Amount', 'Status', 'Action'];
     protected $_field_column = ['', '', 'id', 'order_id', 'user_id', '', 'amount', 'status', ''];
     protected $_list = [];
     protected $_links = '';
@@ -495,7 +495,7 @@ class Payout_admin_list_paginate_view_model
             $clean_list_entry['user_id'] = $list[$key]->user_id;
             $clean_list_entry['paypal_email'] = $value->paypal_email;
             $clean_list_entry['amount'] = $list[$key]->amount;
-            $clean_list_entry['status'] = $list[$key]->status;
+            $clean_list_entry['status'] =  $list[$key]->status;
             $clean_list[] = $clean_list_entry;
         }
 

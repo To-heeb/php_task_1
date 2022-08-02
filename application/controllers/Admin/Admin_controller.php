@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 /**
  * Admin Controller
  *
@@ -11,7 +11,7 @@
 class Admin_controller extends Manaknight_Controller
 {
 
-    public $_page_name ='dashboard';
+    public $_page_name = 'dashboard';
 
     public $_valid_roles = [2];
 
@@ -24,8 +24,7 @@ class Admin_controller extends Manaknight_Controller
         $this->_data['layout_clean_mode'] = FALSE;
         $this->_run_middlewares();
         $layout_mode = $this->input->get('layout_clean_mode', TRUE);
-        if (isset($layout_mode) && $layout_mode === '1')
-        {
+        if (isset($layout_mode) && $layout_mode === '1') {
             $this->_data['layout_clean_mode'] = TRUE;
         }
     }
@@ -67,7 +66,7 @@ class Admin_controller extends Manaknight_Controller
         $data['page_section'] = $template;
         $this->load->view('Layout/AdminHeader', $data);
         $this->load->view($template, $data);
-        $this->load->view('Layout/AdminFooter',$data);
+        $this->load->view('Layout/AdminFooter', $data);
     }
 
     /**
@@ -78,12 +77,12 @@ class Admin_controller extends Manaknight_Controller
     public function unauthorize_error_message()
     {
         return $this->output->set_content_type('application/json')
-        ->set_status_header(401)
-        ->set_output(json_encode([
-            'code' => 401,
-            'success' => FALSE,
-            'message' => 'invalid credentials'
-        ]));
+            ->set_status_header(401)
+            ->set_output(json_encode([
+                'code' => 401,
+                'success' => FALSE,
+                'message' => 'invalid credentials'
+            ]));
     }
 
     /**
@@ -121,8 +120,8 @@ class Admin_controller extends Manaknight_Controller
      *
      * @return string
      */
-    protected function _render_validation_error ()
-	{
+    protected function _render_validation_error()
+    {
         $data = [];
         $data['code'] = 403;
         $data['success'] = FALSE;
@@ -137,8 +136,8 @@ class Admin_controller extends Manaknight_Controller
      *
      * @return string
      */
-    protected function _render_custom_error ($errors)
-	{
+    protected function _render_custom_error($errors)
+    {
         $data = [];
         $data['code'] = 403;
         $data['success'] = FALSE;
